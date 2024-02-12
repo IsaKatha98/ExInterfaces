@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UI</name>
+    </assembly>
+    <members>
+        <member name="M:UI.DAL_UI.clsMiConexión.uriBase">
+            <summary>
+            Función que devuelve la cadena de la URI de mi API.
+            
+            </summary>
+            <returns>El enlace de la uri</returns>
+        </member>
+        <member name="M:UI.DAL_UI.clsListados.ListadoPersonas">
+            <summary>
+            Método que se conecta a la api y devuelve un listado de personas
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UI.DAL_UI.clsListados.ListadoCompletoDepartamentosDAL">
+            <summary>
+            Método que se conecta con una api y devuelve un listado de departamentos.
+            </summary>
+        </member>
+        <member name="M:UI.Viewmodels.MainPageVM.comprobarCommandExecute">
+            <summary>
+            Método que comprueba si ha habido un ganador o no. 
+            Reinicia el juego si el usuario lo desea.
+            </summary>
+        </member>
+        <member name="M:UI.Viewmodels.Utils.DelegateCommand.#ctor(System.Action)">
+            <summary>
+            Initializes a new instance of the RelayCommand class that 
+            can always execute.
+            </summary>
+            <param name="execute">The execution logic.</param>
+            <exception cref="T:System.ArgumentNullException">If the execute argument is null.</exception>
+        </member>
+        <member name="M:UI.Viewmodels.Utils.DelegateCommand.#ctor(System.Action,System.Func{System.Boolean})">
+            <summary>
+            Initializes a new instance of the RelayCommand class.
+            </summary>
+            <param name="execute">The execution logic.</param>
+            <param name="canExecute">The execution status logic.</param>
+            <exception cref="T:System.ArgumentNullException">If the execute argument is null.</exception>
+        </member>
+        <member name="E:UI.Viewmodels.Utils.DelegateCommand.CanExecuteChanged">
+            <summary>
+            Occurs when changes occur that affect whether the command should execute.
+            </summary>
+        </member>
+        <member name="M:UI.Viewmodels.Utils.DelegateCommand.RaiseCanExecuteChanged">
+            <summary>
+            Raises the <see cref="E:UI.Viewmodels.Utils.DelegateCommand.CanExecuteChanged" /> event.
+            </summary>
+        </member>
+        <member name="M:UI.Viewmodels.Utils.DelegateCommand.CanExecute(System.Object)">
+            <summary>
+            Defines the method that determines whether the command can execute in its current state.
+            </summary>
+            <param name="parameter">This parameter will always be ignored.</param>
+            <returns>true if this command can be executed; otherwise, false.</returns>
+        </member>
+        <member name="M:UI.Viewmodels.Utils.DelegateCommand.Execute(System.Object)">
+            <summary>
+            Defines the method to be called when the command is invoked. 
+            </summary>
+            <param name="parameter">This parameter will always be ignored.</param>
+        </member>
+    </members>
+</doc>

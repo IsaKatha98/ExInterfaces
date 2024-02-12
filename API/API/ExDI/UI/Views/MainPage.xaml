@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UI.Views.MainPage"
+             xmlns:model="clr-namespace:UI.Viewmodels">
+
+    <ContentPage.BindingContext>
+        <model:MainPageVM/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <ListView x:Name="listaPersonasLW" HorizontalOptions="Center" ItemsSource="{Binding ListadoPersonasconListadoDepartamentos}" Margin="15">
+
+            <ListView.ItemTemplate>
+
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+
+
+
+                            <Label Text="{Binding Persona.Nombre}" Margin="5" />
+                            <Label Text="{Binding Persona.Apellidos}" Margin="5"/>
+
+                                <Picker ItemsSource="{Binding ListaDepartamentos}" 
+    ItemDisplayBinding="{Binding Nombre}"
+    SelectedItem="{Binding  DepartamentoSeleccionado}"
+     VerticalOptions="End"
+        VerticalTextAlignment="End"
+     HorizontalTextAlignment="Center"
+     
+    WidthRequest="200"/>
+
+                            </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            </ListView>
+            <HorizontalStackLayout Margin="8" HorizontalOptions="Center">
+                <Label Text="Jugadas Restantes:"/>
+                <Label Text="{Binding ContadorJugadasRestantes}"/>
+
+            </HorizontalStackLayout>
+
+     
+          
+            <Button Text="Comprobar" Command="{Binding ComprobarCommand}" HorizontalOptions="Center" WidthRequest="200"/>
+
+
+
+
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

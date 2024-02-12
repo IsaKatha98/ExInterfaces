@@ -1,0 +1,26 @@
+UI
+
+	DAL_UI
+		clsListados 
+			TaskList<clsDepartamento>ListadoDepartamentos()
+			TaskList<clsPersona>>ListadoPersonas()
+
+
+
+	Models
+		clsPersonaconListadoDepartamentos
+	
+
+	ViewModels
+
+		MainPageVM
+			ObservableCollection<clsPersonaconListadoDepartamentos> listadoPersonasconListadoDepartamentos
+			int contadorJugadasRestantes
+			comando comprobar
+
+
+	Views
+
+		MainPage
+
+
