@@ -8,6 +8,7 @@ using Entidades;
 using UI.Viewmodels.Utils;
 using UI.Models;
 using UI.DAL_UI;
+using UI.Views;
 
 
 namespace UI.Viewmodels
@@ -27,7 +28,7 @@ namespace UI.Viewmodels
             //Cargamos la lista de personas con el listado de departamentos.
             cargarLista();
             contadorJugadasRestantes = 3;
-            comprobarCommand = new DelegateCommand(comprobarCommandExecute); //el botón comprobar siempre estará habilitado.
+            comprobarCommand = new DelegateCommand(comprobarCommandExecute);
 
         }
 
@@ -83,43 +84,119 @@ namespace UI.Viewmodels
         #endregion
 
         #region comandos
+
+        /// <summary>
+        /// Método que desbloque el botón comprobar.
+        /// Se desbloquea cuando no hay ningún departamentoSeleccionado que sea null.
+        /// </summary>
+        /// <returns></returns>
+        /*
+        private bool comprobarCommandCanExecute()
+        {
+            bool puedeComprobar = false;
+
+            //recorremos la lista de personas con departamento y comprobamos que ninguno 
+            //de departamento seleccionado es null.
+            foreach (clsPersonaconListadoDepartamentos p in listadoPersonasconListadoDepartamentos)
+            {
+                if (p.DepartamentoSeleccionado!=null)
+                {
+                    puedeComprobar = true;
+                }
+            }
+
+            return puedeComprobar;
+        }*/
+
+
         /// <summary>
         /// Método que comprueba si ha habido un ganador o no. 
         /// Reinicia el juego si el usuario lo desea.
         /// </summary>
         private async void comprobarCommandExecute()
         {
-            bool ganador = false;
+            int numAciertos=0;
 
-            //nos hace falta una lista que sea listadoPersonasBien, que es la lista ganadora.
-            //esta lista se comparará con aquella que nos llega desde la vista.
-
-            
-
-            ObservableCollection<clsPersona> listadoPersonasBien = new ObservableCollection<clsPersona>(await clsListados.ListadoPersonas());
-
-            
+            //recorremos la lista y comparamos si departamento seleccionado es igual que el id del departamentos de la clsPersona.
 
             foreach (clsPersonaconListadoDepartamentos p in listadoPersonasconListadoDepartamentos)
             {
-                foreach (clsPersona per in listadoPersonasBien)
+                if (p.DepartamentoSeleccionado.Id == p.IdDepartamento)
                 {
-                    if (p.DepartamentoSeleccionado.Id == per.IdDepartamento)
-                    {
-                        ganador = true;
-                    }
-                }
-
-
+                    //aumentamos en 1 el número de aciertos.
+                    numAciertos++;
+                } 
             }
 
-           //Aquí haríamos las alertas al usuario con if-else y la variable ganador.
-           //Si ganador==true, se le notifica que ha ganado y se le da la opción de reiniciar o abandonar el juego.
-           //Si ganador==false, se le notifica que ha perdido y se le da opción de volver al juego (restando una jugada) o
-           //abandonar el juego.
+            if (numAciertos == 8)
+            {
+                //Ha ganado la partida.
+                //Se le notifica que ha ganado y se le da la opción de reiniciar o abandonar el juego.
+                ganaPartida();
+            
+            } else
+            {
+                //Ha perdido.
+                //se le notifica que ha perdido y se le da opción de volver al juego (restando una jugada) o
+                //abandonar el juego.
+                pierdePartida();
+            }
 
         }
 
         #endregion
+
+        #region métodos y funciones
+        public async void ganaPartida()
+        {
+            bool repite = await App.Current.MainPage.DisplayAlert("¡Ha ganado!", "¿Quiere repetir?", "Sí", "No");
+
+            if (repite)
+            {
+                cargarLista();
+
+            }
+            else
+            {
+                Application.Current.Quit();
+            }
+        }
+
+        public async void pierdePartida()
+        {
+            bool repite= await App.Current.MainPage.DisplayAlert("Ha perdido", "¿Quiere repetir?", "Sí", "No");
+
+            if (repite&&contadorJugadasRestantes>0)
+            {
+                //en caso de que quiera repetir, restamos 1 a los intentos.
+                contadorJugadasRestantes--;
+                //Notificamos cambios en esa propiedad.
+                NotifyPropertyChanged("ContadorJugadasRestantes");
+
+                //seteamos todos los departamentos seleccionados a null.
+                foreach (clsPersonaconListadoDepartamentos p in listadoPersonasconListadoDepartamentos)
+                {
+                    p.DepartamentoSeleccionado = null;
+       
+                }
+
+                //Notificamos cambios en esa propiedad.
+                NotifyPropertyChanged("ListadoPersonasconListadoDepartamentos");
+
+            } else if (contadorJugadasRestantes==0) {
+
+                await App.Current.MainPage.DisplayAlert("Oh no", "Se ha quedado sin partidas", "OK");
+
+                //se cerrará la ventana.
+                Application.Current.Quit();
+            } else
+            {
+                //en caso de que quiera abandonar, se cerrará la ventana.
+                Application.Current.Quit();  
+               
+            }
+        }
+        #endregion
+
     }
 }

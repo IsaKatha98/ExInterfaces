@@ -25,8 +25,6 @@ namespace UI.Models
             this.departamentoSeleccionado = new clsDepartamento();
         }
 
-       
-
         #endregion
         #region propiedades
 
