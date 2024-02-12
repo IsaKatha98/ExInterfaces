@@ -15,7 +15,7 @@ namespace UI.Viewmodels
     public class MainPageVM:clsVMBase
     {
         #region atributos
-        ObservableCollection<clsPersonaconListadoDepartamentos> listadoPersonasconListadoDepartamentos = new ObservableCollection<clsPersonaconListadoDepartamentos>();      
+        ObservableCollection<clsPersonaconListadoDepartamentos> listadoPersonasconListadoDepartamentos;
         int contadorJugadasRestantes;
         DelegateCommand comprobarCommand;
         #endregion
@@ -36,16 +36,21 @@ namespace UI.Viewmodels
             //pedimos el listado de personas.
             List<clsPersona> listadopersonas = await clsListados.ListadoPersonas();
 
+            //Pedimos el listado de departamentos.
+            List<clsDepartamento> listadoDepartamentos = await clsListados.ListadoCompletoDepartamentosDAL();
+
+            //Instanciamos la lista de persona con listado departamentos.
+            listadoPersonasconListadoDepartamentos = new ObservableCollection<clsPersonaconListadoDepartamentos>();
+
             //Para en el nombre departamento mostrar el listado de departamentos,
             //Hay que recorrer el listadopersonas y asociar la persona con un listado de departamentos.
             foreach (clsPersona p in listadopersonas)
             {
-                clsPersonaconListadoDepartamentos per= new clsPersonaconListadoDepartamentos(p);
+                clsPersonaconListadoDepartamentos per= new clsPersonaconListadoDepartamentos(p, listadoDepartamentos);
 
                 //Obviamos a las personas nulas.
                 if (per != null)
                 {
-                    //Rellenamos el listado de personas con departamento pero que no saben el nombre del departamento.
                     listadoPersonasconListadoDepartamentos.Add(per);
                 }
 

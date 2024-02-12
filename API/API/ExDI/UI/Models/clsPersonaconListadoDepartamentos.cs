@@ -15,7 +15,6 @@ namespace UI.Models
     {
         #region atributos
         private List<clsDepartamento> listaDepartamentos;
-        private clsPersona persona;
         private clsDepartamento departamentoSeleccionado;
         #endregion
 
