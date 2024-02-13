@@ -28,6 +28,18 @@
             Reinicia el juego si el usuario lo desea.
             </summary>
         </member>
+        <member name="M:UI.Viewmodels.MainPageVM.ganaPartida">
+            <summary>
+            Método que realiza las acciones de repetición o abandono del juego en caso de que 
+            el usuario haya ganado.
+            </summary>
+        </member>
+        <member name="M:UI.Viewmodels.MainPageVM.pierdePartida">
+            <summary>
+            Método que realiza las acciones de repetición o abandono del juego en caso de que 
+            el usuario haya perdido.
+            </summary>
+        </member>
         <member name="M:UI.Viewmodels.Utils.DelegateCommand.#ctor(System.Action)">
             <summary>
             Initializes a new instance of the RelayCommand class that 

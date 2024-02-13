@@ -86,34 +86,10 @@ namespace UI.Viewmodels
         #region comandos
 
         /// <summary>
-        /// Método que desbloque el botón comprobar.
-        /// Se desbloquea cuando no hay ningún departamentoSeleccionado que sea null.
-        /// </summary>
-        /// <returns></returns>
-        /*
-        private bool comprobarCommandCanExecute()
-        {
-            bool puedeComprobar = false;
-
-            //recorremos la lista de personas con departamento y comprobamos que ninguno 
-            //de departamento seleccionado es null.
-            foreach (clsPersonaconListadoDepartamentos p in listadoPersonasconListadoDepartamentos)
-            {
-                if (p.DepartamentoSeleccionado!=null)
-                {
-                    puedeComprobar = true;
-                }
-            }
-
-            return puedeComprobar;
-        }*/
-
-
-        /// <summary>
         /// Método que comprueba si ha habido un ganador o no. 
         /// Reinicia el juego si el usuario lo desea.
         /// </summary>
-        private async void comprobarCommandExecute()
+        private void comprobarCommandExecute()
         {
             int numAciertos=0;
 
@@ -147,25 +123,37 @@ namespace UI.Viewmodels
         #endregion
 
         #region métodos y funciones
+        /// <summary>
+        /// Método que realiza las acciones de repetición o abandono del juego en caso de que 
+        /// el usuario haya ganado.
+        /// </summary>
         public async void ganaPartida()
         {
             bool repite = await App.Current.MainPage.DisplayAlert("¡Ha ganado!", "¿Quiere repetir?", "Sí", "No");
 
             if (repite)
             {
+                //recargamos la lista.
                 cargarLista();
 
             }
             else
             {
+                //se cierra la ventana
                 Application.Current.Quit();
             }
         }
+
+        /// <summary>
+        /// Método que realiza las acciones de repetición o abandono del juego en caso de que 
+        /// el usuario haya perdido.
+        /// </summary>
 
         public async void pierdePartida()
         {
             bool repite= await App.Current.MainPage.DisplayAlert("Ha perdido", "¿Quiere repetir?", "Sí", "No");
 
+            //Si quiere repetir y hay jugadas restantes
             if (repite&&contadorJugadasRestantes>0)
             {
                 //en caso de que quiera repetir, restamos 1 a los intentos.
@@ -173,16 +161,10 @@ namespace UI.Viewmodels
                 //Notificamos cambios en esa propiedad.
                 NotifyPropertyChanged("ContadorJugadasRestantes");
 
-                //seteamos todos los departamentos seleccionados a null.
-                foreach (clsPersonaconListadoDepartamentos p in listadoPersonasconListadoDepartamentos)
-                {
-                    p.DepartamentoSeleccionado = null;
-       
-                }
+                //recargamos la lista.
+                cargarLista();
 
-                //Notificamos cambios en esa propiedad.
-                NotifyPropertyChanged("ListadoPersonasconListadoDepartamentos");
-
+            //si no le quedan jugadas
             } else if (contadorJugadasRestantes==0) {
 
                 await App.Current.MainPage.DisplayAlert("Oh no", "Se ha quedado sin partidas", "OK");
